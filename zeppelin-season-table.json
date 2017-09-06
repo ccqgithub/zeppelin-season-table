@@ -1,0 +1,7 @@
+{
+  "type" : "VISUALIZATION",
+  "name" : "zeppelin-season-table",
+  "description": "zeppelin-season-table",
+  "artifact" : "zeppelin-season-table@1.0.0",
+  "icon": "<i style=\"color:#1fa67a\" class=\"fa fa-table\"></i>"
+}
