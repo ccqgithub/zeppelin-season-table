@@ -25,6 +25,13 @@ export default class HandsonHelper {
 
   getHandsonTableConfig(columns, columnNames, resultRows, config) {
     var self = this;
+    var tableOptionList = config.tableOptionList || [];
+    var tableOptions = {};
+
+    tableOptionList.forEach(item => {
+      tableOptions[item.name] = item;
+    });
+
     return {
       colHeaders: columnNames,
       data: resultRows,
@@ -43,32 +50,31 @@ export default class HandsonHelper {
       disableVisualSelection: true,
       allowHtml: true,
       cells: function(ro, co, pro) {
+        let filedName = columnNames[co];
+        let tableOptionsObj = tableOptions[filedName] || {};
+        let color = tableOptionsObj.color || '';
+
         var cellProperties = {};
         var colType = columns[co].type;
         cellProperties.renderer = function(instance, td, row, col, prop, value, cellProperties) {
+          if (color) {
+            td.style.color = color;
+          }
           self._cellRenderer(instance, td, row, col, prop, value, cellProperties, colType);
         };
         return cellProperties;
       },
       colHeaders(index) {
-        let tableOptions = config.tableOptions || {};
-        let tableOptionsObj = {};
-        
-        try {
-          tableOptionsObj = JSON.parse(tableOptions.value || '{}');
-        } catch(e) {
-          console.log('tableOptions error', config);
-        }
-
-        let names = tableOptionsObj.columnNames || {};
-        let tips = tableOptionsObj.columnNameTips || {};
-
-        let key = columnNames[index];
+        let filedName = columnNames[index];
+        let tableOptionsObj = tableOptions[filedName] || {};
+        let title = tableOptionsObj.title || filedName;
+        let color = tableOptionsObj.color || '';
+        let description = tableOptionsObj.description || '';
 
         return `
-          <span data-toggle="tooltip" title="${tips[key] || ''}">
-            ${names[key] || key}
-            <i class="fa fa-info-circle" style="margin-top: 2px; margin-left: 3px; color: #7b7bbd;" aria-hidden="true"></i>
+          <span data-toggle="tooltip" title="${description}" style="${color ? 'color:' + color + ';' : ''}">
+            ${title}
+            <i class="fa fa-info-circle ${!description ? 'hide' : ''}" style="margin-top: 2px; margin-left: 3px; color: #7b7bbd;" aria-hidden="true"></i>
           </span>
         `;
       },

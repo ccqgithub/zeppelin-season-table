@@ -4,21 +4,6 @@ import HandsonHelper from './helper'
 
 const SETTING_TEMPLATE = require('raw-loader!./visualization-table-setting.html')
 
-const TABLE_OPTIONS = {
-  name: 'Table Options',
-  value: JSON.stringify({
-    columnNames: {
-      age: '年龄',
-      count: '数量'
-    },
-    columnNameTips: {
-      age: '年龄',
-      count: '数量'
-    }
-  }, null, 2),
-  description: 'Table Options'
-}
-
 /**
  * Visualize data in table format
  */
@@ -30,7 +15,7 @@ export default class TableVisualization extends Visualization {
     targetEl.addClass('table');
     this.passthrough = new PassthroughTransformation(config);
 
-    config.tableOptions = config.tableOptions || TABLE_OPTIONS;
+    config.tableOptionList = config.tableOptionList || [];
   }
 
   // refresh() {
@@ -93,8 +78,41 @@ export default class TableVisualization extends Visualization {
     const self = this // for closure in scope
     const configObj = self.config
 
-    configObj.setTableOptions = function() {
-      console.log('setTableOptions')
+    configObj.addTableOptionList = function() {
+      console.log('addTableOptionList')
+      
+      configObj.tableOptionList.push({
+        name: 'fieldName',
+        title: 'Field Name',
+        descriotion: 'Field Description',
+        color: ''
+      });
+
+      self.emitConfig(configObj);
+    }
+
+    configObj.delTableOptionList = function(item) {
+      console.log('delTableOptionList')
+      
+      // let index = -1;
+
+      // configObj.tableOptionList.forEach((item, i) => {
+      //   if (item.name == name) {
+      //     index = i;
+      //   }
+      // });
+
+      let index = configObj.tableOptionList.indexOf(item);
+      
+      if (index != -1) {
+        configObj.tableOptionList.splice(index, 1);
+      }
+
+      self.emitConfig(configObj);
+    }
+
+    configObj.setTableOptionList = function() {
+      console.log('setTableOptionList')
       self.emitConfig(configObj);
     }
 
