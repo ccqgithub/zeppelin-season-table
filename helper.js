@@ -72,9 +72,9 @@ export default class HandsonHelper {
         let description = tableOptionsObj.description || '';
 
         return `
-          <span data-toggle="tooltip" title="${description}" style="${color ? 'color:' + color + ';' : ''}">
-            ${title}
-            <i class="fa fa-info-circle ${!description ? 'hide' : ''}" style="margin-top: 2px; margin-left: 3px; color: #7b7bbd;" aria-hidden="true"></i>
+          <span class="columnSorting" style="${color ? 'color:' + color + ';' : ''}">
+            <span>${title}</span>
+            <i class="fa fa-info-circle ${!description ? 'hide' : ''}" style="margin-top: 2px; margin-left: 3px; color: #7b7bbd;" aria-hidden="true" data-toggle="popover"></i>
           </span>
         `;
       },
@@ -82,6 +82,12 @@ export default class HandsonHelper {
         var instance = this;
         var menu = self._buildDropDownMenu(columns[col].type);
         var button = self._buildTypeSwitchButton();
+
+        let filedName = columnNames[col];
+        let tableOptionsObj = tableOptions[filedName] || {};
+        let title = tableOptionsObj.title || filedName;
+        let color = tableOptionsObj.color || '';
+        let description = tableOptionsObj.description || '';
 
         self._addButtonMenuEvent(button, menu);
 
@@ -97,9 +103,22 @@ export default class HandsonHelper {
         TH.firstChild.appendChild(button);
         TH.style['white-space'] = 'normal';
 
-        $(TH).find('[data-toggle="tooltip"]').tooltip({
-          container: 'body'
-        });
+        let options = {
+          container: 'body',
+          template: `
+            <div class="popover" role="tooltip">
+              <div class="arrow"></div>
+              <h3 class="popover-title"></h3>
+              <div class="popover-content" style="white-space: pre-wrap;"></div>
+            </div>
+          `,
+          trigger: 'hover',
+          title: title,
+          content: description,
+          placement: 'auto'
+        };
+
+        $(TH).find('[data-toggle="popover"]').popover(options);
       }
     };
   };
