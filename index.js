@@ -28,8 +28,8 @@ export default class TableVisualization extends Visualization {
   // }
 
   render (tableData) {
+    var config = this.config;
     var height = this.targetEl.height();
-    var container = this.targetEl.css('height', height).get(0);
     var resultRows = tableData.rows;
     var columnNames = _.pluck(tableData.columns, 'name');
     var columns = Array.apply(null, Array(tableData.columns.length)).map(function() {
@@ -40,6 +40,44 @@ export default class TableVisualization extends Visualization {
       this.hot.destroy();
     }
 
+    var $descriptionDiv = $(`
+      <div style="height: 30px;">
+        <span class="label label-default" data-toggle="popover">
+          About this table 
+          <i class="fa fa-info-circle" style="margin-left: 3px;"></i>
+        </span>
+      </div>
+    `);
+
+    var $tableDiv = $(`
+      <div class="table"></div>
+    `);
+
+    this.targetEl.html('');
+    if (config.tableDescription) {
+      height = height - 30;
+      this.targetEl.append($descriptionDiv);
+      let options = {
+        container: 'body',
+        template: `
+          <div class="popover" role="tooltip">
+            <div class="arrow"></div>
+            <h3 class="popover-title"></h3>
+            <div class="popover-content" style="white-space: pre-wrap;"></div>
+          </div>
+        `,
+        trigger: 'hover',
+        title: 'Table description',
+        content: config.tableDescription,
+        placement: 'right'
+      };
+  
+      $descriptionDiv.find('[data-toggle="popover"]').popover(options);
+    }
+    $tableDiv.css('height', height);
+    this.targetEl.append($tableDiv);
+
+    var container = $tableDiv.get(0);
     var handsonHelper = new HandsonHelper();
     this.hot = new Handsontable(container, handsonHelper.getHandsonTableConfig(
       columns, columnNames, resultRows, this.config));
@@ -77,6 +115,14 @@ export default class TableVisualization extends Visualization {
   getSetting (chart) {
     const self = this // for closure in scope
     const configObj = self.config;
+
+    if (!configObj.tabeleDescription) {
+      configObj.tabeleDescription = '';
+    }
+
+    configObj.setTableDescription = function() {
+      self.emitConfig(self.config);
+    }
 
     configObj.addTableOptionList = function() {
       console.log('addTableOptionList')

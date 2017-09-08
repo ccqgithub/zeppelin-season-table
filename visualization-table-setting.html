@@ -14,20 +14,22 @@ limitations under the License.
 
 <div class="panel panel-default" style="margin-top: 10px; margin-bottom: 11px;">
   <div class="panel-heading" style="padding: 6px 12px 6px 12px; font-size: 13px;">
-    <span style="vertical-align: middle; display: inline-block; margin-top: 3px;">表格显示配置</span>
-    <span style="float: right;">
-       <div class="btn-group" role="group" aria-label="...">
-         <div type="button" ng-click="resetTableOption()"
-              uib-tooltip="Restore the default setting" tooltip-placement="left"
-              class="btn btn-default" style="font-size: 11px; padding: 2px 5px 2px 5px;">
-           <i class="fa fa-undo" aria-hidden="true"></i>
-         </div>
-       </div>
-    </span>
-    <div style="clear: both;"></div> <!-- to fix previous span which has float: right -->
+    <span style="vertical-align: middle; display: inline-block; margin-top: 3px;">配置</span>
   </div>
 
   <div class="panel-body" style="padding: 8px 12px; margin-top: 3px;">
+    <div class="form-group">
+      <label>表格描述：</label>
+      <textarea class="form-control" rows="2"
+            ng-model="config.tableDescription"
+            ng-blur="config.setTableDescription()"
+            style="font-weight: 400; font-size: 12px;">
+      </textarea>
+    </div>
+
+    <div>
+      <label>字段显示配置：</label>
+    </div>
     <table class="table table-striped table-bordered">
       <tr>
         <th width="25%" style="font-size: 12px; font-style: italic">字段</th>

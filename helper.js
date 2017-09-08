@@ -73,8 +73,8 @@ export default class HandsonHelper {
 
         return `
           <span class="columnSorting" style="${color ? 'color:' + color + ';' : ''}">
-            <span>${title}</span>
-            <i class="fa fa-info-circle ${!description ? 'hide' : ''}" style="margin-top: 2px; margin-left: 3px; color: #7b7bbd;" aria-hidden="true" data-toggle="popover"></i>
+            <span class="columnSorting">${title}</span>
+            <i class="fa fa-info-circle ${!description ? 'hide' : ''}" style="margin-top: 2px; margin-right: 3px; color: #7b7bbd;" aria-hidden="true" data-toggle="popover"></i>
           </span>
         `;
       },
