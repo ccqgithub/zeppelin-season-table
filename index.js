@@ -76,44 +76,39 @@ export default class TableVisualization extends Visualization {
 
   getSetting (chart) {
     const self = this // for closure in scope
-    const configObj = self.config
+    const configObj = self.config;
 
     configObj.addTableOptionList = function() {
       console.log('addTableOptionList')
       
-      configObj.tableOptionList.push({
+      if (!self.config.tableOptionList) {
+        self.config.tableOptionList = [];
+      }
+      self.config.tableOptionList.push({
         name: 'fieldName',
         title: 'Field Name',
         descriotion: 'Field Description',
         color: ''
       });
 
-      self.emitConfig(configObj);
+      self.emitConfig(self.config);
     }
 
     configObj.delTableOptionList = function(item) {
       console.log('delTableOptionList')
-      
-      // let index = -1;
 
-      // configObj.tableOptionList.forEach((item, i) => {
-      //   if (item.name == name) {
-      //     index = i;
-      //   }
-      // });
-
-      let index = configObj.tableOptionList.indexOf(item);
+      let index = self.config.tableOptionList.indexOf(item);
       
       if (index != -1) {
-        configObj.tableOptionList.splice(index, 1);
+        self.config.tableOptionList.splice(index, 1);
       }
 
-      self.emitConfig(configObj);
+      self.emitConfig(self.config);
     }
 
     configObj.setTableOptionList = function() {
       console.log('setTableOptionList')
-      self.emitConfig(configObj);
+      self.emitConfig(self.config);
     }
 
     return {
