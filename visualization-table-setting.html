@@ -35,7 +35,7 @@ limitations under the License.
         <th width="25%" style="font-size: 12px; font-style: italic">字段</th>
         <th width="25%" style="font-size: 12px; font-style: italic">字段显示名称</th>
         <th width="25%" style="font-size: 12px; font-style: italic">字段提示</th>
-        <th width="25%" style="font-size: 12px; font-style: italic">字段显示颜色</th>
+        <th width="25%" style="font-size: 12px; font-style: italic">字段显示颜色(如：'#000000', 'rgb(0,0,0)')</th>
         <th width="25%">
 
         </th>
@@ -64,11 +64,11 @@ limitations under the License.
             </textarea>
         </td>
         <td>
-            <textarea class="form-control" rows="1"
-                      ng-model="item.color"
-                      ng-blur="config.setTableOptionList()"
-                      style="font-weight: 400; font-size: 12px;">
-            </textarea>
+            <input type="color" class="form-control" rows="1"
+                  ng-model="item.color"
+                  ng-blur="config.setTableOptionList()"
+                  style="font-weight: 400; font-size: 12px;"
+            >
         </td> 
         <td>
             <button type="button" class="btn btn-danger btn-sm" ng-click="config.delTableOptionList(item)">删除</button>

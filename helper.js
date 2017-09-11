@@ -72,9 +72,9 @@ export default class HandsonHelper {
         let description = tableOptionsObj.description || '';
 
         return `
-          <span class="columnSorting" style="${color ? 'color:' + color + ';' : ''}">
+          <span class="columnSorting" style="${color ? 'color:' + color + ';' : ''}" data-toggle="popover">
             <span class="columnSorting">${title}</span>
-            <i class="fa fa-info-circle ${!description ? 'hide' : ''}" style="margin-top: 2px; margin-right: 3px; color: #7b7bbd;" aria-hidden="true" data-toggle="popover"></i>
+            <i class="fa fa-info-circle ${!description ? 'hide' : ''}" style="margin-top: 2px; margin-right: 3px; color: #7b7bbd;" aria-hidden="true"></i>
           </span>
         `;
       },
@@ -115,7 +115,7 @@ export default class HandsonHelper {
           trigger: 'hover',
           title: title,
           content: description,
-          placement: 'auto'
+          placement: 'bottom'
         };
 
         $(TH).find('[data-toggle="popover"]').popover(options);
