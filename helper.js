@@ -119,6 +119,10 @@ export default class HandsonHelper {
         };
 
         $(TH).find('[data-toggle="popover"]').popover(options);
+
+        $(TH).find('[data-toggle="popover"]').on('DOMNodeRemoved', function() {
+          $(TH).find('[data-toggle="popover"]').popover('destroy');
+        });
       }
     };
   };
