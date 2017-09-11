@@ -60,7 +60,7 @@ export default class TableVisualization extends Visualization {
       let options = {
         container: 'body',
         template: `
-          <div class="popover" role="tooltip">
+          <div class="popover" role="tooltip" style="max-width: 640px;">
             <div class="arrow"></div>
             <h3 class="popover-title"></h3>
             <div class="popover-content" style="white-space: pre-wrap;"></div>
